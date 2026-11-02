@@ -45,7 +45,13 @@ Ktpt.CourseOrder/
 
 Таблицы базы данных: `Books`, `Authors`, `BookAuthors`, `Publishers`, `Copies`, `Loans`, `LoanStatuses`, `Users`, `Roles`.
 
-## Запуск
+## Скачать готовую программу
+
+На странице [Releases](../../releases/latest) скачайте архив `Ktpt.CourseOrder-…-win-x64.zip` и распакуйте его. Затем впишите свой SQL Server в `connection.txt` и запустите `Ktpt.CourseOrder.exe`. Устанавливать .NET не нужно.
+
+Новый релиз собирается автоматически при пуше тега вида `v*`, например `git tag v1.1.0 && git push --tags`.
+
+## Сборка из исходников
 
 1. Установите [.NET 10 SDK](https://dotnet.microsoft.com/download) и SQL Server.
 2. Разверните базу данных `library` на своём сервере.

@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Тег релиза (например, v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish (Windows x64, self-contained, single file)
+        run: >
+          dotnet publish Ktpt.CourseOrder.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:DebugType=None
+          -o publish
+
+      - name: Pack
+        run: |
+          cd publish
+          ls -la
+          zip -r "../Ktpt.CourseOrder-${TAG}-win-x64.zip" .
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" "Ktpt.CourseOrder-${TAG}-win-x64.zip" \
+            --title "Ktpt.CourseOrder $TAG" \
+            --target "$GITHUB_SHA" \
+            --notes "Сборка для Windows x64. Установка .NET не нужна.
+
+          1. Скачайте и распакуйте архив.
+          2. Впишите свой SQL Server в connection.txt.
+          3. Запустите Ktpt.CourseOrder.exe."
