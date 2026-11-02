@@ -1,0 +1,319 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.App"
+             RequestedThemeVariant="Light">
+
+	<Application.Resources>
+		<!-- Палитра взята с логотипа: синий + золотой на «бумажном» фоне -->
+		<SolidColorBrush x:Key="BackgroundBrush" Color="#F5F3EE" />
+		<SolidColorBrush x:Key="NormalBrush" Color="#FFFFFF" />
+		<SolidColorBrush x:Key="SurfaceBrush" Color="#FAF8F4" />
+		<SolidColorBrush x:Key="BorderBrush" Color="#E6E0D4" />
+		<SolidColorBrush x:Key="InkBrush" Color="#1B2A3A" />
+		<SolidColorBrush x:Key="MutedBrush" Color="#6B7280" />
+		<SolidColorBrush x:Key="AccentBrush" Color="#25609A" />
+		<SolidColorBrush x:Key="AccentHoverBrush" Color="#1D4E7E" />
+		<SolidColorBrush x:Key="AccentSoftBrush" Color="#E7EFF7" />
+		<SolidColorBrush x:Key="GoldBrush" Color="#C49A4A" />
+		<SolidColorBrush x:Key="SidebarBrush" Color="#132F4C" />
+		<SolidColorBrush x:Key="SidebarHoverBrush" Color="#1D4166" />
+		<SolidColorBrush x:Key="SuccessBrush" Color="#2F7A4F" />
+		<SolidColorBrush x:Key="SuccessSoftBrush" Color="#E3F3E9" />
+		<SolidColorBrush x:Key="WarningBrush" Color="#9A6512" />
+		<SolidColorBrush x:Key="WarningSoftBrush" Color="#FBF0DB" />
+		<SolidColorBrush x:Key="DangerBrush" Color="#B42F2F" />
+		<SolidColorBrush x:Key="DangerSoftBrush" Color="#FBE7E7" />
+		<SolidColorBrush x:Key="LowStockBrush" Color="#FBE7E7" />
+		<SolidColorBrush x:Key="TextLightBrush" Color="#FFFFFF" />
+
+		<!-- Иконки (24x24) -->
+		<StreamGeometry x:Key="IconBooks">M4,3H8V21H4Z M10,3H14V21H10Z M15.6,4.4L19.4,3.4L23.6,20.3L19.8,21.3Z</StreamGeometry>
+		<StreamGeometry x:Key="IconSwap">M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z</StreamGeometry>
+		<StreamGeometry x:Key="IconUsers">M8,4A3,3 0 1,1 8,10A3,3 0 1,1 8,4Z M16,4A3,3 0 1,1 16,10A3,3 0 1,1 16,4Z M1,20V19C1,16 5,14 8,14C11,14 15,16 15,19V20Z M15.5,14.2C18.5,14.4 23,15.8 23,19V20H17V19C17,17 16.5,15.5 15.5,14.2Z</StreamGeometry>
+		<StreamGeometry x:Key="IconUser">M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z</StreamGeometry>
+		<StreamGeometry x:Key="IconLogout">M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z</StreamGeometry>
+		<StreamGeometry x:Key="IconSearch">M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z</StreamGeometry>
+		<StreamGeometry x:Key="IconUserPlus">M9,4A4,4 0 0,1 13,8A4,4 0 0,1 9,12A4,4 0 0,1 5,8A4,4 0 0,1 9,4M9,14C13.42,14 17,15.79 17,18V20H1V18C1,15.79 4.58,14 9,14Z M19,7H21V10H24V12H21V15H19V12H16V10H19Z</StreamGeometry>
+		<StreamGeometry x:Key="IconBookPlus">M5,2H15V4H5V20H19V12H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2Z M8,7H13V9H8Z M8,11H15V13H8Z M19,1H21V4H24V6H21V9H19V6H16V4H19Z</StreamGeometry>
+		<StreamGeometry x:Key="IconInbox">M3,3H21A2,2 0 0,1 23,5V19A2,2 0 0,1 21,21H3A2,2 0 0,1 1,19V5A2,2 0 0,1 3,3M3,13V19H21V13H16A4,4 0 0,1 12,17A4,4 0 0,1 8,13H3M3,5V11H10V13A2,2 0 0,0 12,15A2,2 0 0,0 14,13V11H21V5Z</StreamGeometry>
+		<StreamGeometry x:Key="IconBack">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</StreamGeometry>
+	</Application.Resources>
+
+	<Application.Styles>
+		<FluentTheme />
+
+		<!-- Окно -->
+		<Style Selector="Window">
+			<Setter Property="FontFamily" Value="Segoe UI, Calibri, sans-serif" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+			<Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+		</Style>
+
+		<!-- ===== Текст ===== -->
+		<Style Selector="TextBlock.h1">
+			<Setter Property="FontSize" Value="28" />
+			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+		</Style>
+		<Style Selector="TextBlock.h2">
+			<Setter Property="FontSize" Value="18" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+		</Style>
+		<Style Selector="TextBlock.muted">
+			<Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+		</Style>
+		<Style Selector="TextBlock.label">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+			<Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+		</Style>
+		<!-- Старые классы оставлены для совместимости -->
+		<Style Selector="TextBlock.heading">
+			<Setter Property="FontSize" Value="28" />
+			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+		</Style>
+		<Style Selector="TextBlock.subtext">
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+		</Style>
+
+		<!-- ===== Поля ввода ===== -->
+		<Style Selector="TextBox">
+			<Setter Property="Padding" Value="12,9" />
+			<Setter Property="CornerRadius" Value="10" />
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+		</Style>
+		<Style Selector="ComboBox">
+			<Setter Property="Padding" Value="12,8" />
+			<Setter Property="CornerRadius" Value="10" />
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="MinHeight" Value="38" />
+		</Style>
+
+		<!-- Рамка поля в фокусе — фирменный синий, а не системный цвет Windows -->
+		<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+			<Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+		</Style>
+		<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+			<Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+		</Style>
+
+		<Style Selector="NumericUpDown">
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+			<Setter Property="MinHeight" Value="38" />
+		</Style>
+
+		<!-- ===== Кнопки ===== -->
+		<Style Selector="Button">
+			<Setter Property="CornerRadius" Value="10" />
+			<Setter Property="Padding" Value="14,8" />
+			<Setter Property="Cursor" Value="Hand" />
+		</Style>
+
+		<!-- Главная (синяя) -->
+		<!-- Класс не «accent»: так называется встроенный стиль Fluent, он берёт системный цвет Windows -->
+		<Style Selector="Button.primary">
+			<Setter Property="Background" Value="{StaticResource AccentBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource TextLightBrush}" />
+			<Setter Property="Padding" Value="18,10" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+		</Style>
+		<Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource AccentHoverBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource TextLightBrush}" />
+		</Style>
+
+		<!-- Обычная (белая с рамкой) -->
+		<Style Selector="Button.outline">
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+		</Style>
+		<Style Selector="Button.outline:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+		</Style>
+
+		<!-- Зелёная «Принять возврат» -->
+		<Style Selector="Button.success">
+			<Setter Property="Background" Value="{StaticResource SuccessSoftBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+		</Style>
+		<Style Selector="Button.success:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SuccessBrush}" />
+			<Setter Property="Foreground" Value="{StaticResource TextLightBrush}" />
+		</Style>
+
+		<!-- Прозрачная (текстовая) -->
+		<Style Selector="Button.link">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+		</Style>
+		<Style Selector="Button.link:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+		</Style>
+
+		<!-- Пункты бокового меню -->
+		<Style Selector="Button.nav">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="Foreground" Value="#C9D6E3" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="HorizontalContentAlignment" Value="Left" />
+			<Setter Property="Padding" Value="14,11" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+		</Style>
+		<Style Selector="Button.nav:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SidebarHoverBrush}" />
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+		<Style Selector="Button.nav.active">
+			<Setter Property="Background" Value="#FFFFFF" />
+			<Setter Property="Foreground" Value="{StaticResource SidebarBrush}" />
+		</Style>
+		<Style Selector="Button.nav.active:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#FFFFFF" />
+			<Setter Property="Foreground" Value="{StaticResource SidebarBrush}" />
+		</Style>
+		<Style Selector="Button.nav PathIcon">
+			<Setter Property="Width" Value="18" />
+			<Setter Property="Height" Value="18" />
+		</Style>
+
+		<!-- Карточка-кнопка (книга в каталоге, строка пользователя) -->
+		<Style Selector="Button.card">
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="14" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		</Style>
+		<Style Selector="Button.card:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+		</Style>
+		<Style Selector="Button.card:pressed">
+			<Setter Property="RenderTransform" Value="scale(0.99)" />
+		</Style>
+
+		<!-- ===== Блоки ===== -->
+		<Style Selector="Border.card">
+			<Setter Property="Background" Value="{StaticResource NormalBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="14" />
+			<Setter Property="Padding" Value="20" />
+			<Setter Property="BoxShadow" Value="0 2 10 0 #0F1B2A3A" />
+		</Style>
+
+		<!-- Нарисованная обложка для книг без картинки -->
+		<Style Selector="Border.cover">
+			<Setter Property="Background">
+				<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+					<GradientStop Offset="0" Color="#25609A" />
+					<GradientStop Offset="1" Color="#132F4C" />
+				</LinearGradientBrush>
+			</Setter>
+		</Style>
+
+		<!-- Круглая аватарка с инициалами -->
+		<Style Selector="Border.avatar">
+			<Setter Property="Background" Value="{StaticResource AccentSoftBrush}" />
+			<Setter Property="CornerRadius" Value="100" />
+		</Style>
+		<Style Selector="Border.avatar TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+
+		<!-- Плашки статусов -->
+		<Style Selector="Border.badge">
+			<Setter Property="CornerRadius" Value="20" />
+			<Setter Property="Padding" Value="10,3" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Background" Value="{StaticResource AccentSoftBrush}" />
+		</Style>
+		<Style Selector="Border.badge TextBlock">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+			<Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+		</Style>
+		<Style Selector="Border.badge.success">
+			<Setter Property="Background" Value="{StaticResource SuccessSoftBrush}" />
+		</Style>
+		<Style Selector="Border.badge.success TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+		</Style>
+		<Style Selector="Border.badge.warning">
+			<Setter Property="Background" Value="{StaticResource WarningSoftBrush}" />
+		</Style>
+		<Style Selector="Border.badge.warning TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+		</Style>
+		<Style Selector="Border.badge.danger">
+			<Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+		</Style>
+		<Style Selector="Border.badge.danger TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+		</Style>
+		<Style Selector="Border.badge.neutral">
+			<Setter Property="Background" Value="#EFECE6" />
+		</Style>
+		<Style Selector="Border.badge.neutral TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+		</Style>
+
+		<!-- Всплывающее сообщение -->
+		<Style Selector="Border.toast">
+			<Setter Property="CornerRadius" Value="12" />
+			<Setter Property="Padding" Value="16,12" />
+			<Setter Property="Background" Value="{StaticResource SuccessSoftBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BoxShadow" Value="0 6 20 0 #261B2A3A" />
+		</Style>
+		<Style Selector="Border.toast TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+		</Style>
+		<Style Selector="Border.toast.error">
+			<Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+		</Style>
+		<Style Selector="Border.toast.error TextBlock">
+			<Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+		</Style>
+
+		<!-- Списки без синей подсветки выбора -->
+		<Style Selector="ListBox.plain">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+		</Style>
+		<Style Selector="ListBox.plain ListBoxItem">
+			<Setter Property="Padding" Value="0" />
+		</Style>
+		<Style Selector="ListBox.plain ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+		</Style>
+		<Style Selector="ListBox.plain ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent" />
+		</Style>
+	</Application.Styles>
+</Application>

@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.AddBookView">
+
+	<ScrollViewer>
+		<StackPanel Spacing="20" MaxWidth="820" HorizontalAlignment="Stretch" Margin="0,0,0,20">
+			<StackPanel Spacing="4">
+				<TextBlock Classes="h1" Text="Добавление книги" />
+				<TextBlock Classes="muted" Text="Книга появится в каталоге. Экземпляры добавляются в разделе «Приём в фонд»" />
+			</StackPanel>
+
+			<Border Classes="card" Padding="28">
+				<StackPanel Spacing="16">
+					<StackPanel Spacing="6">
+						<TextBlock Classes="label" Text="НАЗВАНИЕ КНИГИ *" />
+						<TextBox x:Name="TitleBox" PlaceholderText="Введите название" />
+					</StackPanel>
+
+					<Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+						<TextBlock Classes="label" Text="АВТОР *" Margin="0,0,0,6" />
+						<TextBlock Grid.Column="1" Classes="label" Text="ИЗДАТЕЛЬСТВО *" Margin="12,0,0,6" />
+						<ComboBox Grid.Row="1" x:Name="AuthorBox" HorizontalAlignment="Stretch" PlaceholderText="Выберите автора" />
+						<ComboBox Grid.Row="1" Grid.Column="1" x:Name="PublisherBox" HorizontalAlignment="Stretch"
+						          PlaceholderText="Выберите издательство" Margin="12,0,0,0" />
+					</Grid>
+
+					<Grid ColumnDefinitions="*,120,*" RowDefinitions="Auto,Auto">
+						<TextBlock Classes="label" Text="ЖАНР" Margin="0,0,0,6" />
+						<TextBlock Grid.Column="1" Classes="label" Text="ГОД" Margin="12,0,0,6" />
+						<TextBlock Grid.Column="2" Classes="label" Text="ISBN" Margin="12,0,0,6" />
+						<TextBox Grid.Row="1" x:Name="GenreBox" PlaceholderText="Роман, Фантастика..." />
+						<TextBox Grid.Row="1" Grid.Column="1" x:Name="YearBox" PlaceholderText="2024" Margin="12,0,0,0" />
+						<TextBox Grid.Row="1" Grid.Column="2" x:Name="IsbnBox" PlaceholderText="978-5-..." Margin="12,0,0,0" />
+					</Grid>
+
+					<StackPanel Spacing="6">
+						<TextBlock Classes="label" Text="ФАЙЛ ОБЛОЖКИ (НЕОБЯЗАТЕЛЬНО)" />
+						<TextBox x:Name="ImageBox" PlaceholderText="book.png — файл из папки Assets/Images" />
+						<TextBlock Classes="muted" FontSize="12" Text="Если файла нет, программа нарисует обложку сама" />
+					</StackPanel>
+
+					<Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,4" />
+
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<Button Content="Сохранить книгу" Classes="primary" Click="SaveClick" />
+						<Button Content="Отмена" Classes="outline" Click="CancelClick" />
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

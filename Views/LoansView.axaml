@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.LoansView">
+
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Spacing="4" Margin="0,0,0,18">
+			<TextBlock Classes="h1" Text="Выдачи" />
+			<TextBlock Classes="muted" Text="Кто что взял, когда вернуть и что уже просрочено" />
+		</StackPanel>
+
+		<!-- Счётчики -->
+		<Grid DockPanel.Dock="Top" ColumnDefinitions="*,*,*" Margin="0,0,0,18">
+			<Border Classes="card" Margin="0,0,8,0">
+				<StackPanel Spacing="2">
+					<TextBlock Classes="label" Text="НА РУКАХ" />
+					<TextBlock x:Name="ActiveCountText" FontSize="30" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" Text="—" />
+				</StackPanel>
+			</Border>
+			<Border Grid.Column="1" Classes="card" Margin="8,0">
+				<StackPanel Spacing="2">
+					<TextBlock Classes="label" Text="ПРОСРОЧЕНО" />
+					<TextBlock x:Name="OverdueCountText" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" Text="—" />
+				</StackPanel>
+			</Border>
+			<Border Grid.Column="2" Classes="card" Margin="8,0,0,0">
+				<StackPanel Spacing="2">
+					<TextBlock Classes="label" Text="ВОЗВРАЩЕНО ВСЕГО" />
+					<TextBlock x:Name="ReturnedCountText" FontSize="30" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" Text="—" />
+				</StackPanel>
+			</Border>
+		</Grid>
+
+		<!-- Фильтры -->
+		<Grid DockPanel.Dock="Top" ColumnDefinitions="*,220" Margin="0,0,0,14">
+			<TextBox x:Name="SearchBox" PlaceholderText="Поиск по книге или читателю..." TextChanged="FiltersChanged">
+				<TextBox.InnerLeftContent>
+					<PathIcon Data="{StaticResource IconSearch}" Width="16" Height="16" Margin="12,0,0,0"
+					          Foreground="{StaticResource MutedBrush}" />
+				</TextBox.InnerLeftContent>
+			</TextBox>
+			<ComboBox x:Name="FilterBox" Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Stretch"
+			          SelectedIndex="1" SelectionChanged="FiltersChanged">
+				<ComboBoxItem Content="Все выдачи" />
+				<ComboBoxItem Content="На руках" />
+				<ComboBoxItem Content="Просроченные" />
+				<ComboBoxItem Content="Возвращённые" />
+			</ComboBox>
+		</Grid>
+
+		<!-- Таблица -->
+		<Border Classes="card" Padding="0">
+			<DockPanel>
+				<Border DockPanel.Dock="Top" Padding="20,12" Background="{StaticResource SurfaceBrush}" CornerRadius="14,14,0,0"
+				        BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+					<Grid ColumnDefinitions="2*,1.5*,180,170,120,110">
+						<TextBlock Classes="label" Text="КНИГА" />
+						<TextBlock Grid.Column="1" Classes="label" Text="ЧИТАТЕЛЬ" />
+						<TextBlock Grid.Column="2" Classes="label" Text="ВЫДАНА → СРОК" />
+						<TextBlock Grid.Column="3" Classes="label" Text="ОСТАЛОСЬ" />
+						<TextBlock Grid.Column="4" Classes="label" Text="СТАТУС" />
+					</Grid>
+				</Border>
+
+				<Panel>
+					<ScrollViewer>
+						<ItemsControl x:Name="LoansList">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border Padding="20,12" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+										<Grid ColumnDefinitions="2*,1.5*,180,170,120,110">
+											<StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
+												<TextBlock Text="{Binding BookTitle}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+												<TextBlock Text="{Binding CopyText}" Classes="muted" FontSize="12" />
+											</StackPanel>
+											<Button Grid.Column="1" Classes="link" Padding="0" Click="ReaderClick"
+											        HorizontalAlignment="Left" Foreground="{StaticResource InkBrush}">
+												<TextBlock Text="{Binding ReaderName}" TextTrimming="CharacterEllipsis" TextDecorations="Underline" />
+											</Button>
+											<TextBlock Grid.Column="2" Text="{Binding PeriodText}" Classes="muted" VerticalAlignment="Center" />
+											<TextBlock Grid.Column="3" Text="{Binding TermText}" VerticalAlignment="Center"
+											           Classes.overdue="{Binding IsOverdue}" />
+											<Border Grid.Column="4" Classes="badge"
+											        Classes.success="{Binding IsReturned}"
+											        Classes.danger="{Binding IsOverdue}">
+												<TextBlock Text="{Binding StatusText}" />
+											</Border>
+											<Button Grid.Column="5" Content="Вернуть" Classes="success" Click="ReturnClick"
+											        IsVisible="{Binding IsActive}" HorizontalAlignment="Right" />
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</ScrollViewer>
+
+					<TextBlock x:Name="EmptyText" Text="Выдач нет" Classes="muted" IsVisible="False"
+					           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40" />
+				</Panel>
+			</DockPanel>
+		</Border>
+	</DockPanel>
+
+	<UserControl.Styles>
+		<Style Selector="TextBlock.overdue">
+			<Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+		</Style>
+	</UserControl.Styles>
+</UserControl>

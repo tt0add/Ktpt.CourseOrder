@@ -1,0 +1,157 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.UserDetailsView">
+
+	<UserControl.Styles>
+		<Style Selector="TextBlock.overdue">
+			<Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+			<Setter Property="FontWeight" Value="SemiBold" />
+		</Style>
+	</UserControl.Styles>
+
+	<ScrollViewer>
+		<StackPanel Spacing="20" MaxWidth="1040" Margin="0,0,0,20">
+
+			<!-- Назад (только сотрудникам — у читателя это его собственная страница) -->
+			<Button x:Name="BackButton" Classes="link" Click="BackClick" Padding="0,4" IsVisible="False">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<PathIcon Data="{StaticResource IconBack}" Width="16" Height="16" />
+					<TextBlock Text="Назад к списку" />
+				</StackPanel>
+			</Button>
+
+			<!-- Шапка профиля -->
+			<Border Classes="card" Padding="24">
+				<Grid ColumnDefinitions="Auto,*,Auto">
+					<Border Classes="avatar" Width="76" Height="76">
+						<TextBlock x:Name="AvatarText" FontSize="26" />
+					</Border>
+					<StackPanel Grid.Column="1" Margin="20,0" VerticalAlignment="Center" Spacing="6">
+						<TextBlock x:Name="HeaderText" Classes="h1" />
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Border Classes="badge neutral">
+								<TextBlock x:Name="RoleText" />
+							</Border>
+							<Border x:Name="OverdueBadge" Classes="badge danger" IsVisible="False">
+								<TextBlock Text="Есть просрочка" />
+							</Border>
+						</StackPanel>
+					</StackPanel>
+					<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+						<Button x:Name="EditButton" Content="Редактировать" Classes="outline" Click="EditClick" IsVisible="False" />
+						<Button x:Name="IssueButton" Content="Выдать книгу" Classes="primary" Click="IssueClick" IsVisible="False" />
+					</StackPanel>
+				</Grid>
+			</Border>
+
+			<!-- Редактирование данных (только администратор) -->
+			<Border x:Name="EditPanel" Classes="card" IsVisible="False" BorderBrush="{StaticResource AccentBrush}">
+				<StackPanel Spacing="14">
+					<TextBlock Classes="h2" Text="Редактирование пользователя" />
+					<Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+						<TextBlock Classes="label" Text="ФАМИЛИЯ *" Margin="0,0,0,6" />
+						<TextBlock Grid.Column="1" Classes="label" Text="ИМЯ *" Margin="12,0,0,6" />
+						<TextBlock Grid.Column="2" Classes="label" Text="ОТЧЕСТВО" Margin="12,0,0,6" />
+						<TextBox Grid.Row="1" x:Name="EditLastNameBox" />
+						<TextBox Grid.Row="1" Grid.Column="1" x:Name="EditFirstNameBox" Margin="12,0,0,0" />
+						<TextBox Grid.Row="1" Grid.Column="2" x:Name="EditMiddleNameBox" Margin="12,0,0,0" />
+					</Grid>
+					<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto,Auto">
+						<TextBlock Classes="label" Text="EMAIL *" Margin="0,0,0,6" />
+						<TextBlock Grid.Column="1" Classes="label" Text="ТЕЛЕФОН" Margin="12,0,0,6" />
+						<TextBlock Grid.Column="2" Classes="label" Text="ГРУППА" Margin="12,0,0,6" />
+						<TextBlock Grid.Column="3" Classes="label" Text="РОЛЬ" Margin="12,0,0,6" />
+						<TextBox Grid.Row="1" x:Name="EditEmailBox" />
+						<TextBox Grid.Row="1" Grid.Column="1" x:Name="EditPhoneBox" Margin="12,0,0,0" />
+						<TextBox Grid.Row="1" Grid.Column="2" x:Name="EditGroupBox" Margin="12,0,0,0" />
+						<ComboBox Grid.Row="1" Grid.Column="3" x:Name="EditRoleBox" Margin="12,0,0,0" HorizontalAlignment="Stretch" />
+					</Grid>
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<Button Content="Сохранить" Classes="primary" Click="SaveEditClick" />
+						<Button Content="Отмена" Classes="outline" Click="CancelEditClick" />
+					</StackPanel>
+				</StackPanel>
+			</Border>
+
+			<!-- Панель выдачи (скрыта по умолчанию) -->
+			<Border x:Name="IssuePanel" Classes="card" IsVisible="False" BorderBrush="{StaticResource AccentBrush}">
+				<StackPanel Spacing="12">
+					<TextBlock Classes="h2" Text="Новая выдача" />
+					<Grid ColumnDefinitions="*,Auto,Auto">
+						<ComboBox x:Name="AvailableCopiesBox" HorizontalAlignment="Stretch" PlaceholderText="Выберите свободный экземпляр" />
+						<Button Grid.Column="1" Content="Выдать" Classes="primary" Margin="12,0,0,0" Click="ConfirmIssueClick" />
+						<Button Grid.Column="2" Content="Отмена" Classes="outline" Margin="8,0,0,0" Click="CancelIssueClick" />
+					</Grid>
+					<TextBlock x:Name="DueHintText" Classes="muted" />
+				</StackPanel>
+			</Border>
+
+			<!-- Контакты + статистика -->
+			<Grid ColumnDefinitions="2*,*,*,*">
+				<Border Classes="card" Margin="0,0,8,0">
+					<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+						<TextBlock Classes="label" Text="EMAIL" VerticalAlignment="Center" Margin="0,0,16,0" />
+						<TextBlock Grid.Column="1" x:Name="EmailText" TextTrimming="CharacterEllipsis" />
+						<TextBlock Grid.Row="1" Classes="label" Text="ТЕЛЕФОН" VerticalAlignment="Center" Margin="0,10,16,0" />
+						<TextBlock Grid.Row="1" Grid.Column="1" x:Name="PhoneText" Margin="0,10,0,0" />
+						<TextBlock Grid.Row="2" Classes="label" Text="ГРУППА" VerticalAlignment="Center" Margin="0,10,16,0" />
+						<TextBlock Grid.Row="2" Grid.Column="1" x:Name="GroupText" Margin="0,10,0,0" />
+					</Grid>
+				</Border>
+				<Border Grid.Column="1" Classes="card" Margin="8,0">
+					<StackPanel Spacing="2">
+						<TextBlock Classes="label" Text="НА РУКАХ" />
+						<TextBlock x:Name="ActiveCountText" FontSize="30" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" />
+					</StackPanel>
+				</Border>
+				<Border Grid.Column="2" Classes="card" Margin="8,0">
+					<StackPanel Spacing="2">
+						<TextBlock Classes="label" Text="ПРОСРОЧЕНО" />
+						<TextBlock x:Name="OverdueCountText" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
+					</StackPanel>
+				</Border>
+				<Border Grid.Column="3" Classes="card" Margin="8,0,0,0">
+					<StackPanel Spacing="2">
+						<TextBlock Classes="label" Text="ВСЕГО ВЗЯТО" />
+						<TextBlock x:Name="TotalCountText" FontSize="30" FontWeight="Bold" />
+					</StackPanel>
+				</Border>
+			</Grid>
+
+			<!-- История выдач -->
+			<TextBlock Classes="h2" Text="История выдач" Margin="0,8,0,0" />
+			<Border Classes="card" Padding="0">
+				<Panel>
+					<ItemsControl x:Name="LoansList">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Border Padding="20,12" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+									<Grid ColumnDefinitions="*,190,180,120,110">
+										<StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
+											<TextBlock Text="{Binding BookTitle}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+											<TextBlock Text="{Binding CopyText}" Classes="muted" FontSize="12" />
+										</StackPanel>
+										<TextBlock Grid.Column="1" Text="{Binding PeriodText}" Classes="muted" VerticalAlignment="Center" />
+										<TextBlock Grid.Column="2" Text="{Binding TermText}" VerticalAlignment="Center"
+										           Classes.overdue="{Binding IsOverdue}" />
+										<Border Grid.Column="3" Classes="badge"
+										        Classes.success="{Binding IsReturned}"
+										        Classes.danger="{Binding IsOverdue}">
+											<TextBlock Text="{Binding StatusText}" />
+										</Border>
+										<!-- Кнопка возврата видна, только если книга на руках и смотрит сотрудник -->
+										<Button Grid.Column="4" Content="Вернуть" Classes="success" Click="ReturnClick"
+										        HorizontalAlignment="Right" IsVisible="False" Tag="{Binding IsActive}"
+										        Loaded="ReturnButtonLoaded" />
+									</Grid>
+								</Border>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+					<TextBlock x:Name="EmptyText" Text="Книг пока не брали" Classes="muted" IsVisible="False"
+					           HorizontalAlignment="Center" Margin="0,28" />
+				</Panel>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

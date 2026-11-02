@@ -1,0 +1,89 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.CatalogView">
+
+	<DockPanel>
+		<!-- Заголовок -->
+		<Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+			<StackPanel Spacing="4">
+				<TextBlock Classes="h1" Text="Каталог книг" />
+				<TextBlock x:Name="CountText" Classes="muted" Text="Загрузка..." />
+			</StackPanel>
+		</Grid>
+
+		<!-- Фильтры -->
+		<Grid DockPanel.Dock="Top" ColumnDefinitions="*,220,Auto" Margin="0,0,0,20">
+			<TextBox x:Name="SearchBox" PlaceholderText="Поиск по названию, автору или издательству..."
+			         TextChanged="FiltersChanged">
+				<TextBox.InnerLeftContent>
+					<PathIcon Data="{StaticResource IconSearch}" Width="16" Height="16" Margin="12,0,0,0"
+					          Foreground="{StaticResource MutedBrush}" />
+				</TextBox.InnerLeftContent>
+			</TextBox>
+			<ComboBox x:Name="GenreBox" Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Stretch"
+			          SelectionChanged="FiltersChanged" />
+			<CheckBox x:Name="AvailableOnlyBox" Grid.Column="2" Content="Только в наличии" Margin="16,0,0,0"
+			          IsCheckedChanged="FiltersChanged" />
+		</Grid>
+
+		<Panel>
+			<!-- Сетка карточек -->
+			<ScrollViewer>
+				<ItemsControl x:Name="BooksList">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button Classes="card" Width="214" Margin="0,0,18,18" Click="BookClick">
+								<StackPanel>
+									<!-- Обложка + жанр поверх -->
+									<Panel Height="260">
+										<Border CornerRadius="13,13,0,0" ClipToBounds="True" Background="#EFEAE0">
+											<Panel>
+												<Image Source="{Binding Image}" Stretch="UniformToFill" IsVisible="{Binding HasImage}" />
+												<!-- Своя обложка, если картинки нет -->
+												<Border Classes="cover" IsVisible="{Binding !HasImage}">
+													<StackPanel VerticalAlignment="Center" Spacing="10" Margin="18,30,18,0">
+														<Border Height="2" Width="40" Background="{StaticResource GoldBrush}" HorizontalAlignment="Left" />
+														<TextBlock Text="{Binding Title}" Foreground="White" FontSize="20" FontWeight="Bold"
+														           TextWrapping="Wrap" MaxLines="4" TextTrimming="CharacterEllipsis" />
+														<TextBlock Text="{Binding Authors}" Foreground="#B9CBDD" TextTrimming="CharacterEllipsis" />
+													</StackPanel>
+												</Border>
+											</Panel>
+										</Border>
+										<Border Classes="badge" Background="#E61B2A3A" Margin="10"
+										        VerticalAlignment="Top">
+											<TextBlock Text="{Binding Genre}" Foreground="White" />
+										</Border>
+									</Panel>
+
+									<StackPanel Margin="14,12,14,14" Spacing="4">
+										<TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="15"
+										           TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Height="40" />
+										<TextBlock Text="{Binding Authors}" Classes="muted" TextTrimming="CharacterEllipsis" />
+										<Border Classes="badge" Margin="0,8,0,0"
+										        Classes.success="{Binding IsAvailable}"
+										        Classes.warning="{Binding IsLow}"
+										        Classes.danger="{Binding !IsAvailable}">
+											<TextBlock Text="{Binding CopiesText}" />
+										</Border>
+									</StackPanel>
+								</StackPanel>
+							</Button>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+
+			<!-- Пусто -->
+			<StackPanel x:Name="EmptyPanel" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6">
+				<TextBlock Classes="h2" Text="Ничего не найдено" HorizontalAlignment="Center" />
+				<TextBlock Classes="muted" Text="Попробуйте изменить запрос или фильтры" HorizontalAlignment="Center" />
+			</StackPanel>
+		</Panel>
+	</DockPanel>
+</UserControl>

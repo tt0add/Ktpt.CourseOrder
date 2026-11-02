@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.BookDetailsView">
+
+	<ScrollViewer>
+		<StackPanel Spacing="20" MaxWidth="1040" Margin="0,0,0,20">
+
+			<Button Classes="link" Click="BackClick" Padding="0,4">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<PathIcon Data="{StaticResource IconBack}" Width="16" Height="16" />
+					<TextBlock Text="Назад в каталог" />
+				</StackPanel>
+			</Button>
+
+			<Grid ColumnDefinitions="260,*">
+				<!-- Обложка -->
+				<Border Width="260" Height="370" CornerRadius="16" ClipToBounds="True" Background="#EFEAE0"
+				        VerticalAlignment="Top" BoxShadow="0 10 30 0 #261B2A3A">
+					<Panel>
+						<Image x:Name="CoverImage" Stretch="UniformToFill" />
+						<Border x:Name="GeneratedCover" Classes="cover" IsVisible="False">
+							<StackPanel VerticalAlignment="Center" Spacing="12" Margin="24,0">
+								<Border Height="3" Width="56" Background="{StaticResource GoldBrush}" HorizontalAlignment="Left" />
+								<TextBlock x:Name="CoverTitleText" Foreground="White" FontSize="26" FontWeight="Bold" TextWrapping="Wrap" />
+								<TextBlock x:Name="CoverAuthorsText" Foreground="#B9CBDD" FontSize="15" TextWrapping="Wrap" />
+							</StackPanel>
+						</Border>
+					</Panel>
+				</Border>
+
+				<StackPanel Grid.Column="1" Margin="32,0,0,0" Spacing="14">
+					<StackPanel Spacing="6">
+						<TextBlock x:Name="TitleText" Classes="h1" TextWrapping="Wrap" />
+						<TextBlock x:Name="AuthorsText" FontSize="17" Classes="muted" />
+					</StackPanel>
+
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<Border Classes="badge">
+							<TextBlock x:Name="GenreText" />
+						</Border>
+						<Border x:Name="AvailabilityBadge" Classes="badge">
+							<TextBlock x:Name="AvailabilityText" />
+						</Border>
+					</StackPanel>
+
+					<!-- Сведения -->
+					<Border Classes="card">
+						<Grid ColumnDefinitions="*,*,*,*">
+							<StackPanel Spacing="4">
+								<TextBlock Classes="label" Text="ИЗДАТЕЛЬСТВО" />
+								<TextBlock x:Name="PublisherText" FontWeight="SemiBold" TextWrapping="Wrap" />
+							</StackPanel>
+							<StackPanel Grid.Column="1" Spacing="4">
+								<TextBlock Classes="label" Text="ГОД" />
+								<TextBlock x:Name="YearText" FontWeight="SemiBold" />
+							</StackPanel>
+							<StackPanel Grid.Column="2" Spacing="4">
+								<TextBlock Classes="label" Text="ISBN" />
+								<TextBlock x:Name="IsbnText" FontWeight="SemiBold" />
+							</StackPanel>
+							<StackPanel Grid.Column="3" Spacing="4">
+								<TextBlock Classes="label" Text="ЭКЗЕМПЛЯРОВ" />
+								<TextBlock x:Name="CopiesCountText" FontWeight="SemiBold" />
+							</StackPanel>
+						</Grid>
+					</Border>
+
+					<!-- Выдача (только сотрудникам) -->
+					<Border x:Name="IssuePanel" Classes="card" IsVisible="False" BorderBrush="{StaticResource AccentBrush}">
+						<StackPanel Spacing="12">
+							<TextBlock Classes="h2" Text="Выдать книгу" />
+							<Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+								<TextBlock Classes="label" Text="ЧИТАТЕЛЬ" Margin="0,0,0,6" />
+								<TextBlock Grid.Column="1" Classes="label" Text="ЭКЗЕМПЛЯР" Margin="12,0,0,6" />
+								<ComboBox x:Name="ReaderBox" Grid.Row="1" HorizontalAlignment="Stretch" PlaceholderText="Выберите читателя" />
+								<ComboBox x:Name="CopyBox" Grid.Row="1" Grid.Column="1" Margin="12,0,0,0"
+								          HorizontalAlignment="Stretch" PlaceholderText="Свободный экземпляр" />
+							</Grid>
+							<Grid ColumnDefinitions="*,Auto">
+								<TextBlock x:Name="DueHintText" Classes="muted" VerticalAlignment="Center" />
+								<Button Grid.Column="1" Content="Оформить выдачу" Classes="primary" Click="IssueClick" />
+							</Grid>
+						</StackPanel>
+					</Border>
+				</StackPanel>
+			</Grid>
+
+			<!-- Экземпляры -->
+			<TextBlock Classes="h2" Text="Экземпляры" Margin="0,8,0,0" />
+			<Border Classes="card" Padding="0">
+				<ItemsControl x:Name="CopiesList">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border Padding="20,12" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+								<Grid ColumnDefinitions="120,140,130,*">
+									<TextBlock Text="{Binding CopyId, StringFormat=№ {0}}" FontWeight="SemiBold" VerticalAlignment="Center" />
+									<TextBlock Grid.Column="1" Text="{Binding Shelf, StringFormat=Полка {0}}" Classes="muted" VerticalAlignment="Center" />
+									<Border Grid.Column="2" Classes="badge"
+									        Classes.success="{Binding IsFree}"
+									        Classes.danger="{Binding IsOverdue}">
+										<TextBlock Text="{Binding StatusText}" />
+									</Border>
+									<TextBlock Grid.Column="3" Text="{Binding DetailsText}" Classes="muted" VerticalAlignment="Center" />
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

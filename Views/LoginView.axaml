@@ -1,0 +1,72 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.LoginView">
+
+	<Grid ColumnDefinitions="*,*">
+
+		<!-- Левая половина: логотип и приветствие -->
+		<Border CornerRadius="20" Margin="0,0,16,0" ClipToBounds="True">
+			<Border.Background>
+				<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+					<GradientStop Offset="0" Color="#1D4E7E" />
+					<GradientStop Offset="1" Color="#0F2640" />
+				</LinearGradientBrush>
+			</Border.Background>
+			<Grid RowDefinitions="*,Auto" Margin="40">
+				<StackPanel VerticalAlignment="Center" Spacing="18">
+					<Border Width="132" Height="132" CornerRadius="28" Background="White" ClipToBounds="True"
+					        BoxShadow="0 10 30 0 #40000000">
+						<Image Source="/Assets/logo.png" Stretch="UniformToFill" Margin="-18" />
+					</Border>
+					<TextBlock Text="Библиотека" FontSize="38" FontWeight="Bold" Foreground="White" Margin="0,10,0,0" />
+					<TextBlock Text="Каталог книг, выдача и возврат, читательские профили — всё в одном окне."
+					           FontSize="16" Foreground="#B9CBDD" TextWrapping="Wrap" MaxWidth="380" HorizontalAlignment="Left" />
+				</StackPanel>
+				<Border Grid.Row="1" Height="3" Width="64" CornerRadius="2" HorizontalAlignment="Left"
+				        Background="{StaticResource GoldBrush}" />
+			</Grid>
+		</Border>
+
+		<!-- Правая половина: форма входа -->
+		<Border Grid.Column="1" Classes="card" Margin="16,0,0,0" Padding="48">
+			<StackPanel Spacing="18" MaxWidth="380" VerticalAlignment="Center">
+				<StackPanel Spacing="6" Margin="0,0,0,8">
+					<TextBlock Classes="h1" Text="Вход" />
+					<TextBlock Classes="muted" Text="Выберите себя в списке и введите пароль" />
+				</StackPanel>
+
+				<!-- Поле выбора пользователя -->
+				<StackPanel Spacing="6">
+					<TextBlock Classes="label" Text="ПОЛЬЗОВАТЕЛЬ" />
+					<ComboBox x:Name="UsersBox" HorizontalAlignment="Stretch"
+					          PlaceholderText="Выберите логин"
+					          SelectionChanged="UserChanged" />
+				</StackPanel>
+
+				<!-- Поле пароля (прячется, если у пользователя нет пароля) -->
+				<StackPanel x:Name="PasswordPanel" Spacing="6">
+					<TextBlock Classes="label" Text="ПАРОЛЬ" />
+					<TextBox x:Name="PasswordBox" PlaceholderText="Введите пароль"
+					         PasswordChar="●" KeyDown="PasswordKeyDown" />
+				</StackPanel>
+
+				<!-- Ошибка прямо под формой -->
+				<TextBlock x:Name="ErrorText" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" IsVisible="False" />
+
+				<Button Content="Войти" Classes="primary" Click="LoginClick"
+				        HorizontalAlignment="Stretch" Margin="0,6,0,0" />
+
+				<Grid ColumnDefinitions="*,Auto,*" Margin="0,4">
+					<Border Height="1" Background="{StaticResource BorderBrush}" VerticalAlignment="Center" />
+					<TextBlock Grid.Column="1" Text="или" Classes="muted" FontSize="12" Margin="12,0" />
+					<Border Grid.Column="2" Height="1" Background="{StaticResource BorderBrush}" VerticalAlignment="Center" />
+				</Grid>
+
+				<Button Content="Смотреть каталог как гость" Classes="outline" Click="GuestClick"
+				        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+				<Button Content="Обновить список пользователей" Classes="link" Click="ReloadClick"
+				        HorizontalAlignment="Center" FontSize="12" />
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

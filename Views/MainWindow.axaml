@@ -1,0 +1,119 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Ktpt.CourseOrder.Views.MainWindow"
+        Icon="/Assets/app.ico"
+        Title="Библиотека" Width="1240" Height="800"
+        MinWidth="960" MinHeight="640"
+        WindowStartupLocation="CenterScreen">
+
+	<Grid ColumnDefinitions="Auto,*">
+
+		<!-- ===== Боковое меню (скрыто на экране входа) ===== -->
+		<Border x:Name="Sidebar" Width="248" Background="{StaticResource SidebarBrush}" Padding="16,22">
+			<DockPanel>
+				<!-- Логотип -->
+				<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="6,0,0,28">
+					<Border Width="46" Height="46" CornerRadius="12" Background="White" ClipToBounds="True">
+						<Image Source="/Assets/logo.png" Stretch="UniformToFill" Margin="-6" />
+					</Border>
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Библиотека" FontSize="18" FontWeight="Bold" Foreground="White" />
+						<TextBlock Text="учебного заведения" FontSize="12" Foreground="#8FA6BD" />
+					</StackPanel>
+				</StackPanel>
+
+				<!-- Карточка пользователя внизу -->
+				<Border DockPanel.Dock="Bottom" Background="#0E2540" CornerRadius="12" Padding="12">
+					<StackPanel Spacing="10">
+						<Grid ColumnDefinitions="Auto,*">
+							<Border Classes="avatar" Width="38" Height="38" Background="{StaticResource GoldBrush}">
+								<TextBlock x:Name="AvatarText" Foreground="White" />
+							</Border>
+							<StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+								<TextBlock x:Name="UserText" Foreground="White" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+								<TextBlock x:Name="RoleText" Foreground="#8FA6BD" FontSize="12" />
+							</StackPanel>
+						</Grid>
+						<Button x:Name="LogoutButton" Classes="nav" Click="LogoutClick" Padding="10,8">
+							<StackPanel Orientation="Horizontal" Spacing="10">
+								<PathIcon Data="{StaticResource IconLogout}" />
+								<TextBlock x:Name="LogoutText" Text="Выйти" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Border>
+
+				<!-- Пункты меню -->
+				<StackPanel Spacing="4">
+					<TextBlock Text="МЕНЮ" FontSize="11" FontWeight="Bold" Foreground="#6F89A3" Margin="14,0,0,6" />
+
+					<Button x:Name="CatalogButton" Classes="nav" Click="CatalogClick">
+						<StackPanel Orientation="Horizontal" Spacing="12">
+							<PathIcon Data="{StaticResource IconBooks}" />
+							<TextBlock Text="Каталог" />
+						</StackPanel>
+					</Button>
+
+					<!-- Только для сотрудников -->
+					<Button x:Name="LoansButton" Classes="nav" Click="LoansClick" IsVisible="False">
+						<StackPanel Orientation="Horizontal" Spacing="12">
+							<PathIcon Data="{StaticResource IconSwap}" />
+							<TextBlock Text="Выдачи" />
+						</StackPanel>
+					</Button>
+					<Button x:Name="UsersButton" Classes="nav" Click="UsersClick" IsVisible="False">
+						<StackPanel Orientation="Horizontal" Spacing="12">
+							<PathIcon Data="{StaticResource IconUsers}" />
+							<TextBlock Text="Пользователи" />
+						</StackPanel>
+					</Button>
+
+					<!-- Управление фондом (только сотрудники) -->
+					<StackPanel x:Name="ManagePanel" Spacing="4" IsVisible="False">
+						<TextBlock Text="УПРАВЛЕНИЕ" FontSize="11" FontWeight="Bold" Foreground="#6F89A3" Margin="14,14,0,6" />
+						<Button x:Name="AddReaderButton" Classes="nav" Click="AddReaderClick">
+							<StackPanel Orientation="Horizontal" Spacing="12">
+								<PathIcon Data="{StaticResource IconUserPlus}" />
+								<TextBlock Text="Добавить читателя" />
+							</StackPanel>
+						</Button>
+						<Button x:Name="AddBookButton" Classes="nav" Click="AddBookClick">
+							<StackPanel Orientation="Horizontal" Spacing="12">
+								<PathIcon Data="{StaticResource IconBookPlus}" />
+								<TextBlock Text="Добавить книгу" />
+							</StackPanel>
+						</Button>
+						<Button x:Name="AddCopiesButton" Classes="nav" Click="AddCopiesClick">
+							<StackPanel Orientation="Horizontal" Spacing="12">
+								<PathIcon Data="{StaticResource IconInbox}" />
+								<TextBlock Text="Принять книгу" />
+							</StackPanel>
+						</Button>
+						<TextBlock Text="ЛИЧНОЕ" FontSize="11" FontWeight="Bold" Foreground="#6F89A3" Margin="14,14,0,6" />
+					</StackPanel>
+
+					<!-- Для любого вошедшего -->
+					<Button x:Name="ProfileButton" Classes="nav" Click="ProfileClick" IsVisible="False">
+						<StackPanel Orientation="Horizontal" Spacing="12">
+							<PathIcon Data="{StaticResource IconUser}" />
+							<TextBlock Text="Мой профиль" />
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</DockPanel>
+		</Border>
+
+		<!-- ===== Рабочая область ===== -->
+		<Panel Grid.Column="1">
+			<ContentControl x:Name="PageHost" Margin="32,28,32,20" />
+
+			<!-- Всплывающее сообщение (скрывается само через несколько секунд) -->
+			<Border x:Name="Toast" Classes="toast" IsVisible="False"
+			        HorizontalAlignment="Right" VerticalAlignment="Top"
+			        Margin="0,20,28,0" MaxWidth="460"
+			        PointerPressed="ToastPressed">
+				<TextBlock x:Name="MessageText" TextWrapping="Wrap" FontWeight="SemiBold" />
+			</Border>
+		</Panel>
+	</Grid>
+</Window>

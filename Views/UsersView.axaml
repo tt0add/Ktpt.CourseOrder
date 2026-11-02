@@ -1,0 +1,72 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.UsersView">
+
+	<UserControl.Styles>
+		<!-- Строка-кнопка на всю ширину -->
+		<Style Selector="Button.row">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="CornerRadius" Value="0" />
+			<Setter Property="Padding" Value="20,12" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="0,0,0,1" />
+		</Style>
+		<Style Selector="Button.row:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+		</Style>
+	</UserControl.Styles>
+
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Spacing="4" Margin="0,0,0,18">
+			<TextBlock Classes="h1" Text="Пользователи" />
+			<TextBlock x:Name="CountText" Classes="muted" Text="Загрузка..." />
+		</StackPanel>
+
+		<Grid DockPanel.Dock="Top" ColumnDefinitions="*,220" Margin="0,0,0,14">
+			<TextBox x:Name="SearchBox" PlaceholderText="Поиск по ФИО, email или группе..." TextChanged="FiltersChanged">
+				<TextBox.InnerLeftContent>
+					<PathIcon Data="{StaticResource IconSearch}" Width="16" Height="16" Margin="12,0,0,0"
+					          Foreground="{StaticResource MutedBrush}" />
+				</TextBox.InnerLeftContent>
+			</TextBox>
+			<ComboBox x:Name="RoleBox" Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Stretch"
+			          SelectionChanged="FiltersChanged" />
+		</Grid>
+
+		<Border Classes="card" Padding="0">
+			<ScrollViewer>
+				<ItemsControl x:Name="UsersList">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button Classes="row" Click="UserClick">
+								<Grid ColumnDefinitions="Auto,2*,1.5*,130,150">
+									<Border Classes="avatar" Width="40" Height="40">
+										<TextBlock Text="{Binding Initials}" />
+									</Border>
+									<StackPanel Grid.Column="1" Margin="14,0,12,0" VerticalAlignment="Center">
+										<TextBlock Text="{Binding FullName}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+										<TextBlock Text="{Binding Email}" Classes="muted" FontSize="12" TextTrimming="CharacterEllipsis" />
+									</StackPanel>
+									<StackPanel Grid.Column="2" VerticalAlignment="Center">
+										<TextBlock Classes="label" Text="ГРУППА" />
+										<TextBlock Text="{Binding GroupText}" />
+									</StackPanel>
+									<Border Grid.Column="3" Classes="badge neutral">
+										<TextBlock Text="{Binding Role.Name}" />
+									</Border>
+									<Border Grid.Column="4" Classes="badge" HorizontalAlignment="Right"
+									        Classes.danger="{Binding HasOverdue}">
+										<TextBlock Text="{Binding LoansText}" />
+									</Border>
+								</Grid>
+							</Button>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+		</Border>
+	</DockPanel>
+</UserControl>

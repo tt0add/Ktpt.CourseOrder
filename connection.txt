@@ -1,0 +1,1 @@
+Server=L-KAB23-7;Database=library;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;Connect Timeout=5
